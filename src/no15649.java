@@ -20,6 +20,8 @@ public class no15649 { ///44668	884
         arr = new int[m]; //depth 를 체크하는 용도
 
         dfs(0);
+        bfw.flush();
+
     }
 
     private static void dfs(int depth) throws IOException {
@@ -37,13 +39,13 @@ public class no15649 { ///44668	884
         for (int i = 0; i < n; i++) {
             if (!check[i]) {
                 check[i] = true;
-                arr[depth] = i + 1;
+                arr[depth] = i + 1; //배열에 저장
+
                 dfs(depth + 1);
 
                 check[i] = false;
             }
         }
 
-        bfw.flush();
     }
 }
