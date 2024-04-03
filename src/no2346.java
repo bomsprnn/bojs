@@ -1,49 +1,56 @@
 import java.util.ArrayDeque;
 import java.io.*;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.StringTokenizer;
 
 public class no2346 {
     public static void main(String[] args) throws IOException {
-        BufferedReader bfr = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bfw = new BufferedWriter(new OutputStreamWriter(System.out));
-        int n = Integer.parseInt(bfr.readLine()); //count of balloons
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine()); // 풍선 갯수
+        Deque<Balloon> deque = new ArrayDeque<>();
+        StringBuilder sb = new StringBuilder();
 
-        Deque<int[]> deque = new ArrayDeque<>();
-        StringTokenizer st = new StringTokenizer(bfr.readLine()); //value of each balloons
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 1; i <= N; i++) {
+            deque.add(new Balloon(i, Integer.parseInt(st.nextToken())));
+        }
 
-        for(int i =0; i<n ;i++){
-            int[] arr = {i+1, Integer.parseInt(st.nextToken())};
-            deque.add(arr);
-        } //store
+        // deque을 이용해서 순서를 바꿈
+        Balloon poll = deque.pollFirst(); ///여기서 하나 뽑고 시작하기 때문에 n-1개 풍선이 남음
+        for (int j =0; j<N; j++) { ///지연님이 쓰신대로 n번 반복하면 마지막 풍선 x
+            int next = poll.next;
+            sb.append(poll.seq+" ");
 
-        int[] a = deque.pollFirst();
-        bfw.write(1 +" ");
+            if(deque.size()<=1){
+                sb.append(deque.pollFirst().seq);
+                break;
+            } ///그래서 큐에 하나 남았을 때 마지막 출력하고 break;
 
-        while(!deque.isEmpty()){
-            if(a[1]>0){
-                for(int i =1;i<a[1];i++){
-                    deque.addLast(deque.pollFirst());
+            if (next > 0) {
+                for (int i = 1; i < next; i++) {
+                    deque.offerLast(deque.pollFirst());
                 }
-                a = deque.pollFirst();
-                bfw.write(a[0]+" ");
-            }
-            else if (a[1]<0){
-                for(int i=1;i<Math.abs(a[1]);i++){
-                    deque.addFirst(deque.pollLast());
+                poll = deque.pollFirst();
+            } else {
+                for (int i = 1; i < Math.abs(next); i++) {
+                    deque.offerFirst(deque.pollLast());
                 }
-                a= deque.pollLast();
-                bfw.write(a[0]+" ");
-            }
-            else {
-                a= deque.pollFirst();
-                bfw.write(a[0]+" ");
+                poll = deque.pollLast();
             }
         }
-        bfr.close();
-        bfw.flush();
-        bfw.close();
 
+
+        //sb.deleteCharAt(sb.length()-1);
+        System.out.print(sb);
+        br.close();
+    }
+
+    static class Balloon {
+        int seq, next;
+
+        public Balloon(int seq, int next) {
+            this.seq = seq;
+            this.next = next;
+        }
     }
 }
