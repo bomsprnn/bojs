@@ -25,7 +25,7 @@ public class no10844 {
             result= (result + arr[n][i])%1000000000;
 
         }
-        bfw.write(result+" ");
+        bfw.write(result+"");
         bfw.flush();
 
     }

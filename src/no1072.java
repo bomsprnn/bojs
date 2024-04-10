@@ -35,6 +35,8 @@ public class no1072 {//14308	124ms
                 if (percent > z) high = mid - 1; //만약 현재 승률보다 높으면 high값 조정
                 else low = mid + 1; //현재 승률보다 낮으면 low값 조정
             }
+            int i=38;
+            bfw.write(i);
             bfw.write(low + "");
         }
         bfw.flush();
