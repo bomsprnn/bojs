@@ -107,8 +107,7 @@ public class no16236 {
                 if (nx >= 0 && ny >= 0 && nx < n && ny < n
                         && !visited[ny][nx] && map[ny][nx] <= size) {
                     visited[ny][nx] = true;
-                    dist = dist + 1;
-                    q.add(new int[]{ny, nx, dist});
+                    q.add(new int[]{ny, nx, dist+1});
                 }
             }
         }
